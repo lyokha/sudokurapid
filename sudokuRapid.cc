@@ -419,7 +419,8 @@ void  BasicBoard::solve( void )
     int     cell( 0 );
     long    curState( 0 );
     long    curOverallState( 0 );
-    do
+
+    while ( ! availableCells.empty() )
     {
         bool    badWayCaught( false );
         do
@@ -483,7 +484,7 @@ void  BasicBoard::solve( void )
                 badWayCaught = true;
             }
         } while ( badWayCaught );
-    } while ( ! availableCells.empty() );
+    }
 }
 
 };  // namespace SudokuRapid

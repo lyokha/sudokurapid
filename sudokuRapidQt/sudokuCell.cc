@@ -9,8 +9,8 @@
  *        Created:  04.02.2009 14:17:50
  *       Revision:  none
  *
- *         Author:  Alexey Radkov (lyokha)
- *        Company:  
+ *         Author:  Alexey Radkov (lyokha), alexey.radkov@gmail.com
+ *        Company:  StarSoft Development Labs
  *
  * =============================================================================
  */
@@ -63,7 +63,7 @@ void  SudokuCell::paint( QPainter *  painter,
         case 4 : case 5 : case 6 :
         case 7 : case 8 : case 9 :
             text = QString::number( value );
-            painter->drawText( rect().adjusted( 8, -6, 8, -6 ).bottomLeft(),
+            painter->drawText( rect().adjusted( 7, -5, 7, -5 ).bottomLeft(),
                                text );
             break;
         default:
