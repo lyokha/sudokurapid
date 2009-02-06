@@ -9,8 +9,8 @@
  *        Created:  04.02.2009 14:21:37
  *       Revision:  none
  *
- *         Author:  Alexey Radkov (lyokha), alexey.radkov@gmail.com
- *        Company:  StarSoft Development Labs
+ *         Author:  Alexey Radkov (lyokha)
+ *        Company:  
  *
  * =============================================================================
  */
