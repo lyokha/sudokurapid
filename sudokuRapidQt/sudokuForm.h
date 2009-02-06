@@ -26,7 +26,7 @@ class SudokuScene;
 
 
 class SudokuForm : public QWidget,
-                   public SudokuRapid::BasicBoard,
+                   private SudokuRapid::BasicBoard,
                    private Ui::SudokuForm
 {
     Q_OBJECT
