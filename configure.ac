@@ -8,6 +8,15 @@ AC_CONFIG_SRCDIR([sudokuRapid.h])
 AC_CONFIG_HEADERS([config.h])
 
 
+AC_ARG_ENABLE([debug],
+[AC_HELP_STRING([--enable-debug],
+    [build sudokuRapid in debug mode])],
+[debug_sudokuRapid=yes])
+
+if test "x${debug_sudokuRapid}" = xyes; then
+    CXXFLAGS="${CXXFLAGS} -g -DDEBUG"
+fi
+
 AC_ARG_ENABLE([sudokuRapidConsole],
 [AC_HELP_STRING([--disable-sudokuRapidConsole],
     [disable building of sudokuRapidConsole])],
