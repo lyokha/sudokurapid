@@ -121,8 +121,8 @@ QColor  SudokuCell::getColor( void ) const
         color.setRgb( 128, 192, 255 );
     else
         if ( maturity )
-            color.setRgb( 255, 255 / 9 * ( 9 - maturity ),
-                               255 / 9 * ( 9 - maturity ) );
+            color.setRgb( 255, 170 / 9 * ( 9 - maturity ) + 85,
+                               170 / 9 * ( 9 - maturity ) + 85 );
     if ( isError )
         color = brushErrorColor;
     if ( isHovered )
