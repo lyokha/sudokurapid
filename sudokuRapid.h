@@ -104,8 +104,6 @@ class  BasicBoard
 
         void  restart( void );
 
-        void  readFromFile( const char *  fileName );
-
         void  makeRandom( void );
 
         int   setCellValue( int  cell, int  value );

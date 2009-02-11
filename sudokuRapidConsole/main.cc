@@ -17,6 +17,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <bitset>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,6 +45,34 @@ class SudokuConsole : public SudokuRapid::BasicBoard
                 }
                 std::cout << std::endl;
             }
+        }
+
+        void  readFromFile( const char *  fileName )
+        {
+            std::ifstream   file( fileName );
+            file.exceptions( std::ios::failbit );
+            char    number( 0 );
+            for ( int i( 0 ); i < 9; ++i )
+            {
+                for ( int j( 0 ); j < 9; ++j )
+                {
+                    file >> number;
+                    if ( ! isdigit( number ) )
+                        continue;
+                    int     cell( i * 9 + j );
+                    int     value( number - '0' );
+                    try
+                    {
+                        setCellValue( cell, value );
+                    }
+                    catch ( SudokuRapid::Unsolvable &  e )
+                    {
+                        file.close();
+                        throw;
+                    }
+                }
+            }
+            file.close();
         }
 };
 
