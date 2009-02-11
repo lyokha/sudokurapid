@@ -45,6 +45,11 @@ class SudokuCell : public QGraphicsRectItem
             value = val;
         }
 
+        void  setValueReadRest( int  val )
+        {
+            valueReadRest = val;
+        }
+
         void  setMaturity( int  val )
         {
             maturity = val;
@@ -60,6 +65,11 @@ class SudokuCell : public QGraphicsRectItem
             return number;
         }
 
+        void  setError( bool  error = true )
+        {
+            isError = error;
+        }
+
     private:
         QColor  getColor( void ) const;
 
@@ -67,7 +77,9 @@ class SudokuCell : public QGraphicsRectItem
     int     number;
     int     maturity;
     int     value;
+    int     valueReadRest;
     bool    isHovered;
+    bool    isError;
 };
 
 

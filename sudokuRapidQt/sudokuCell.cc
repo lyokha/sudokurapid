@@ -27,16 +27,20 @@
 namespace
 {
     QFont   font( "Sans", 18 );
+    QFont   fontReadRest( "Sans", 12 );
     QColor  brushInitColor( Qt::white );
+    QColor  brushErrorColor( Qt::red );
     QColor  penColor( 128, 128, 64 );
     QColor  penColorFocused( 96, 96, 64 );
+    QColor  penErrorColor( Qt::black );
 }
 
 
 SudokuCell::SudokuCell( qreal  x, qreal  y, qreal  width, qreal  height,
                         int  number, QGraphicsItem *  parent ) :
     QGraphicsRectItem( x, y, width, height, parent ),
-    number( number ), maturity( 0 ), value( 0 ), isHovered( false )
+    number( number ), maturity( 0 ), value( 0 ), valueReadRest( 0 ),
+    isHovered( false ), isError( false )
 {
     setFlag( QGraphicsItem::ItemIsFocusable );
     setAcceptHoverEvents( true );
@@ -48,23 +52,35 @@ void  SudokuCell::paint( QPainter *  painter,
                          QWidget *  /*widget*/ )
 {
     QPen    pen( getColor() );
-    if ( value )
+    int     valueAny( value );
+    if ( ! valueAny )
+        valueAny = valueReadRest;
+    if ( valueAny )
         pen.setColor( penColor );
     if( hasFocus() )
         pen.setColor( penColorFocused );
-    painter->setBrush( QBrush( getColor() ) );
-    painter->setFont( font );
+    if ( isError )
+        pen.setColor( penErrorColor );
     painter->setPen( pen );
+    painter->setBrush( QBrush( getColor() ) );
+    if ( valueReadRest )
+        painter->setFont( fontReadRest );
+    else
+        painter->setFont( font );
     painter->drawRect( rect() );
+    if ( ! valueAny )
+        return;
     QString     text;
-    switch ( value )
+    QRectF      textRect( rect().adjusted( 7, -5, 7, -5 ) );
+    if ( valueReadRest )
+        textRect = rect().adjusted( 2, -12, 2, -12 );
+    switch ( valueAny )
     {
         case 1 : case 2 : case 3 :
         case 4 : case 5 : case 6 :
         case 7 : case 8 : case 9 :
-            text = QString::number( value );
-            painter->drawText( rect().adjusted( 7, -5, 7, -5 ).bottomLeft(),
-                               text );
+            text = QString::number( valueAny );
+            painter->drawText( textRect.bottomLeft(), text );
             break;
         default:
             break;
@@ -107,6 +123,8 @@ QColor  SudokuCell::getColor( void ) const
         if ( maturity )
             color.setRgb( 255, 255 / 9 * ( 9 - maturity ),
                                255 / 9 * ( 9 - maturity ) );
+    if ( isError )
+        color = brushErrorColor;
     if ( isHovered )
         color = color.lighter( 110 );
     return color;

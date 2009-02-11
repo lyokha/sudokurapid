@@ -37,7 +37,10 @@ class SudokuScene : public QGraphicsScene
 
         SudokuCell *  getCell( int  number );
 
+        void  enable( bool  enabled = true );
+
     private:
+        bool                    isEnabled;
         QGraphicsLineItem *     lh[ 10 ];
         QGraphicsLineItem *     lv[ 10 ];
         SudokuCell *            cell[ 81 ];

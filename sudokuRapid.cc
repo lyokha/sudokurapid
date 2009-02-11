@@ -17,7 +17,6 @@
 
 
 #include <iostream>
-#include <fstream>
 #include <bitset>
 #include <numeric>
 #include <algorithm>
@@ -237,27 +236,6 @@ int  BasicBoard::setCellValue( int  cell, int  value )
                    std::bind2nd( SetCellBits( this ), state ) );
     publish( cell, affectedCells );
     return commitSingletons();
-}
-
-
-void  BasicBoard::readFromFile( const char *  fileName )
-{
-    std::ifstream   file( fileName );
-    file.exceptions( std::ios::failbit );
-    char    number( 0 );
-    for ( int i( 0 ); i < 9; ++i )
-    {
-        for ( int j( 0 ); j < 9; ++j )
-        {
-            file >> number;
-            if ( ! isdigit( number ) )
-                continue;
-            int     cell( i * 9 + j );
-            int     value( number - '0' );
-            setCellValue( cell, value );
-        }
-    }
-    file.close();
 }
 
 

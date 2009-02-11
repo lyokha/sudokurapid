@@ -23,7 +23,13 @@
 #include "sudokuCell.h"
 
 
-SudokuScene::SudokuScene( void )
+namespace
+{
+    QColor  minorGridLinesColor( 192, 192, 192 );
+}
+
+
+SudokuScene::SudokuScene( void ) : isEnabled( true )
 {
     for ( int  i( 0 ); i < 10; ++i )
     {
@@ -31,9 +37,13 @@ SudokuScene::SudokuScene( void )
         lv[ i ] = addLine( QLineF( i * 30, 0, i * 30, 270 ) );
         if ( i % 3 )
         {
-            QColor  color( 192, 192, 192 );
-            lh[ i ]->setPen( QPen( color ) );
-            lv[ i ]->setPen( QPen( color ) );
+            lh[ i ]->setPen( QPen( minorGridLinesColor ) );
+            lv[ i ]->setPen( QPen( minorGridLinesColor ) );
+        }
+        else
+        {
+            lh[ i ]->setZValue( 1 );
+            lv[ i ]->setZValue( 1 );
         }
     }
     for ( int  i( 0 ); i < 81; ++i )
@@ -47,6 +57,18 @@ SudokuScene::SudokuScene( void )
 SudokuCell *  SudokuScene::getCell( int  number )
 {
     return cell[ number ];
+}
+
+
+void  SudokuScene::enable( bool  enabled )
+{
+    if ( enabled == isEnabled )
+        return;
+    for ( int  i( 0 ); i < 81; ++i )
+    {
+        cell[ i ]->setEnabled( enabled );
+    }
+    isEnabled = enabled;
 }
 
 
