@@ -7,8 +7,8 @@ DIR_QT_APP = sudokuRapidQt
 endif
 
 lib_LIBRARIES = libsudokuRapid.a
-include_HEADERS = sudokuRapid.h
-libsudokuRapid_a_SOURCES = sudokuRapid.cc sudokuRapid.h
+include_HEADERS = sudokuRapid.h sudokuRapidCommon.h
+libsudokuRapid_a_SOURCES = sudokuRapid.cc sudokuRapid.h sudokuRapidCommon.h
 SUBDIRS = . $(DIR_CONSOLE_APP) $(DIR_QT_APP)
 
 DIR_QT_DIST = sudokuRapidQt

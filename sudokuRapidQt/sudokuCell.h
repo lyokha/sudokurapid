@@ -21,6 +21,8 @@
 
 #include <QGraphicsRectItem>
 
+#include "sudokuRapidCommon.h"
+
 
 class SudokuCell : public QGraphicsRectItem
 {
@@ -40,24 +42,28 @@ class SudokuCell : public QGraphicsRectItem
 
         void  focusOutEvent( QFocusEvent *  event );
 
-        void  setValue( int  val )
+        void  showHint( SudokuRapid::CellValues &  values );
+
+        void  setValue( int  value, bool  deduced = false );
+
+        void  setMaturity( int  value )
         {
-            value = val;
+            maturity = value;
         }
 
-        void  setValueReadRest( int  val )
+        int   getValueAssigned( void ) const
         {
-            valueReadRest = val;
+            return valueAssigned;
         }
 
-        void  setMaturity( int  val )
+        int   getValueDeduced( void ) const
         {
-            maturity = val;
+            return valueDeduced;
         }
 
-        int  getValue( void ) const
+        bool  isSet( void ) const
         {
-            return value;
+            return valueAssigned || valueDeduced;
         }
 
         int   getNumber( void ) const
@@ -71,15 +77,20 @@ class SudokuCell : public QGraphicsRectItem
         }
 
     private:
-        QColor  getColor( void ) const;
+        QColor  getBrushColor( void ) const;
+
+        QColor  getPenColor( void ) const;
 
     private:
     int     number;
     int     maturity;
-    int     value;
-    int     valueReadRest;
+    int     valueAssigned;
+    int     valueDeduced;
     bool    isHovered;
     bool    isError;
+    bool    isHintVisible;
+
+    SudokuRapid::CellValues     hintValues;
 };
 
 

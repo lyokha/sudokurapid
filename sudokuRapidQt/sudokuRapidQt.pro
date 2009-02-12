@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET =
 DEPENDPATH += . .
-INCLUDEPATH += .
+INCLUDEPATH += . ..
 INSTALLS = target
 
 # Input

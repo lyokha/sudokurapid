@@ -54,12 +54,6 @@ SudokuScene::SudokuScene( void ) : isEnabled( true )
 }
 
 
-SudokuCell *  SudokuScene::getCell( int  number )
-{
-    return cell[ number ];
-}
-
-
 void  SudokuScene::enable( bool  enabled )
 {
     if ( enabled == isEnabled )
@@ -72,6 +66,46 @@ void  SudokuScene::enable( bool  enabled )
 }
 
 
+void  SudokuScene::setCellValue( int  nmb, int  value, bool  deduced )
+{
+    cell[ nmb ]->setValue( value, deduced );
+    int valueAssigned( cell[ nmb ]->getValueAssigned() );
+    int valueDeduced( cell[ nmb ]->getValueDeduced() );
+    if ( valueAssigned && valueDeduced && valueAssigned != valueDeduced )
+        cell[ nmb ]-> setError( true );
+}
+
+
+void  SudokuScene::setCellMaturity( int  nmb, int  maturity )
+{
+    cell[ nmb ]->setMaturity( maturity );
+}
+
+
+void  SudokuScene::setCellError( int  nmb, bool  error )
+{
+    cell[ nmb ]->setError( error );
+}
+
+
+void  SudokuScene::setCellHint( int  nmb, SudokuRapid::CellValues &  values )
+{
+    cell[ nmb ]->showHint( values );
+}
+
+
+void  SudokuScene::cleanupCells( void )
+{
+    for ( int  i( 0 ); i < 81; ++i )
+    {
+        cell[ i ]->setValue( 0, false );
+        cell[ i ]->setValue( 0, true );
+        cell[ i ]->setMaturity( 0 );
+        cell[ i ]->setError( false );
+    }
+}
+
+
 void  SudokuScene::mousePressEvent( QGraphicsSceneMouseEvent *  event )
 {
     SudokuCell *  clicked( dynamic_cast< SudokuCell * >(
@@ -79,6 +113,11 @@ void  SudokuScene::mousePressEvent( QGraphicsSceneMouseEvent *  event )
     if ( clicked )
     {
         clicked->setFocus( Qt::MouseFocusReason );
+        if ( event->button() == Qt::RightButton )
+        {
+            emit wantHint( clicked->getNumber() );
+            invalidate( clicked->rect() );
+        }
     }
 }
 
@@ -95,9 +134,15 @@ void  SudokuScene::keyPressEvent( QKeyEvent *  event )
         case Qt::Key_1 : case Qt::Key_2 : case Qt::Key_3 :
         case Qt::Key_4 : case Qt::Key_5 : case Qt::Key_6 :
         case Qt::Key_7 : case Qt::Key_8 : case Qt::Key_9 :
-            if ( focused->getValue() )
+            if ( focused->isSet() )
                 break;
             emit valueSet( focused->getNumber(), event->key() - Qt::Key_0 );
+            break;
+        case Qt::Key_Space : case Qt::Key_Enter :
+            if ( focused->isSet() )
+                break;
+            emit wantHint( focused->getNumber() );
+            invalidate( focused->rect() );
             break;
         case Qt::Key_Right : case Qt::Key_D :
             cell[ row * 9 + ( col + 1 ) % 9 ]->setFocus();

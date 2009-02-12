@@ -3,7 +3,7 @@
  *
  *       Filename:  sudokuRapid.cc
  *
- *    Description:  Sudoku Solver Lib implementation file
+ *    Description:  sudokuRapid library implementation
  *
  *        Version:  1.0
  *        Created:  09.02.2008 15:01:54 MSK
@@ -265,6 +265,22 @@ void  BasicBoard::makeRandom( void )
 int  BasicBoard::getMaturity( int  cell ) const
 {
     return countSetBits9( cellState[ cell ].state );
+}
+
+
+void  BasicBoard::getFreeValues( int  cell, CellValues &  values ) const
+{
+    if ( cellState[ cell ].value )
+        return;
+    long    state( cellState[ cell ].state );
+    if ( ! ( state & 1 ) )
+        values.insert( 1 );
+    for ( int  i( 0 ); i < 8; ++i )
+    {
+        state >>= 1;
+        if ( ! ( state & 1 ) )
+            values.insert( i + 2 );
+    }
 }
 
 

@@ -3,7 +3,7 @@
  *
  *       Filename:  main.cc
  *
- *    Description:  
+ *    Description:  a simple Qt application using sudokuRapid
  *
  *        Version:  1.0
  *        Created:  02.02.2009 17:06:19
