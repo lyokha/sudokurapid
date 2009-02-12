@@ -20,7 +20,7 @@
 
 
 #include "ui_sudokuForm.h"
-#include "../sudokuRapid.h"
+#include "sudokuRapid.h"
 
 class SudokuScene;
 
@@ -36,6 +36,8 @@ class SudokuForm : public QWidget,
 
     public slots:
         void  updateBoard( int  cell, int  value );
+
+        void  showHint( int  cell );
 
         void  restartBoard( void );
 

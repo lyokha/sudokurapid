@@ -20,6 +20,7 @@
 
 
 #include <QGraphicsScene>
+#include "sudokuRapidCommon.h"
 
 class SudokuCell;
 
@@ -35,9 +36,17 @@ class SudokuScene : public QGraphicsScene
 
         void  keyPressEvent( QKeyEvent *  event );
 
-        SudokuCell *  getCell( int  number );
-
         void  enable( bool  enabled = true );
+
+        void  setCellValue( int  nmb, int  value, bool  deduced = false );
+
+        void  setCellMaturity( int  nmb, int  maturity );
+
+        void  setCellError( int  nmb, bool error = true );
+
+        void  setCellHint( int  nmb, SudokuRapid::CellValues &  values );
+
+        void  cleanupCells( void );
 
     private:
         bool                    isEnabled;
@@ -47,6 +56,8 @@ class SudokuScene : public QGraphicsScene
 
     signals:
         void    valueSet( int  cell, int  value );
+
+        void    wantHint( int  cell );
 };
 
 

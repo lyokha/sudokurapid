@@ -3,7 +3,7 @@
  *
  *       Filename:  main.cc
  *
- *    Description:  Sudoku Solver Console
+ *    Description:  a simple console application using sudokuRapid
  *
  *        Version:  1.0
  *        Created:  29.01.2009 22:46:21

@@ -3,7 +3,7 @@
  *
  *       Filename:  sudokuRapid.h
  *
- *    Description:  Sudoku Solver Lib header file
+ *    Description:  sudokuRapid library header file
  *
  *        Version:  1.0
  *        Created:  29.01.2009 20:24:43
@@ -23,6 +23,8 @@
 #include <list>
 #include <stack>
 #include <stdexcept>
+
+#include "sudokuRapidCommon.h"
 
 
 namespace SudokuRapid {
@@ -111,6 +113,8 @@ class  BasicBoard
         void  solve( void );
 
         int   getMaturity( int  cell ) const;
+
+        void  getFreeValues( int  cell, CellValues &  values ) const;
 
         unsigned int  getNumberOfRetries( void ) const
         {
