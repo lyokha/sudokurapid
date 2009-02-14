@@ -16,6 +16,7 @@
  */
 
 #include <fstream>
+#include <QString>
 #include <QFileDialog>
 
 #include "sudokuForm.h"
@@ -86,6 +87,7 @@ void  SudokuForm::randomBoard( void )
     {
         enable( false );
         scene->setCellError( e.cell );
+        showHint( e.cell );
     }
 }
 
@@ -102,6 +104,7 @@ void  SudokuForm::solveBoard( void )
     {
         enable( false );
         scene->setCellError( e.cell );
+        showHint( e.cell );
     }
 }
 
@@ -110,8 +113,10 @@ void  SudokuForm::openFile( void )
 {
     QString         fileName( QFileDialog::getOpenFileName(
                                 this, tr( "Open File" ) ) );
-    std::ifstream   file( fileName.toLatin1().constData() );
+    if ( fileName.isNull() )
+        return;
     restartBoard();
+    std::ifstream   file( fileName.toLatin1().constData() );
     char    number( 0 );
     bool    unsolvableCaught( false );
     for ( int i( 0 ); i < 9; ++i )

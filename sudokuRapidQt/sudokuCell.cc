@@ -32,8 +32,8 @@ namespace
     QColor  brushInitColor( Qt::white );
     QColor  brushErrorColor( Qt::red );
     QColor  brushValueSetColor( 128, 192, 255 );
-    QColor  penValueSetColor( 128, 128, 64 );
-    QColor  penColorFocused( 96, 96, 64 );
+    QColor  penValueSetColor( 96, 96, 64 );
+    QColor  penColorFocused( 80, 80, 56 );
     QColor  penErrorColor( Qt::black );
 }
 
@@ -173,6 +173,9 @@ QColor  SudokuCell::getBrushColor( void ) const
                                        170 / 9 * ( 9 - maturity ) + 85 );
     if ( isHovered )
         color = color.lighter( 110 );
+    if ( ! isEnabled() )
+        color.setHsvF( color.hueF(), color.saturationF() * 0.8,
+                                     color.valueF() * 0.8 );
     return color;
 }
 
