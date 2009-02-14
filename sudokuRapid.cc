@@ -241,10 +241,8 @@ int  BasicBoard::setCellValue( int  cell, int  value )
 
 void  BasicBoard::makeRandom( void )
 {
-    do
+    while ( ! availableCells.empty() )
     {
-        if ( availableCells.empty() )
-            break;
         int     cell( rand() % ( *availableCells.rbegin() + 1 ) );
         cell = *availableCells.lower_bound( cell );
         int     nmbOfAvailBits( 9 - countSetBits9( cellState[ cell ].state ) );
@@ -258,7 +256,7 @@ void  BasicBoard::makeRandom( void )
                        rand() % nmbOfAvailBits ) );
         if ( setCellValue( cell, bitToValue( state ) ) )
             break;
-    } while ( true );
+    }
 }
 
 
@@ -428,9 +426,7 @@ void  BasicBoard::solve( void )
                         throw Unsolvable( Unsolvable::FATAL, cell,
                                           curOverallState, 0 );
                     }
-                    if ( curOverallState != 0x1FF )
-                        break;
-                } while ( true );
+                } while ( curOverallState == 0x1FF );
                 badWayCaught = false;
             }
             else
