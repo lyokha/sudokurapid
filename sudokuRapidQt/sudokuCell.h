@@ -28,7 +28,8 @@ class SudokuCell : public QGraphicsRectItem
 {
     public:
         SudokuCell( qreal  x, qreal  y, qreal  width, qreal  height,
-                    int  number, QGraphicsItem *  parent = 0 );
+                    int  number, int  smallerFontSize = -1,
+                    QGraphicsItem *  parent = 0 );
 
         void  paint( QPainter *  painter,
                      const QStyleOptionGraphicsItem *  option,
@@ -81,6 +82,8 @@ class SudokuCell : public QGraphicsRectItem
 
         QColor  getPenColor( void ) const;
 
+        void    drawNumber( QPainter *  painter, int  nmb, int  pos = 0 );
+
     private:
     int     number;
     int     maturity;
@@ -89,6 +92,7 @@ class SudokuCell : public QGraphicsRectItem
     bool    isHovered;
     bool    isError;
     bool    isHintVisible;
+    int     smallerFontSize;
 
     SudokuRapid::CellValues     hintValues;
 };

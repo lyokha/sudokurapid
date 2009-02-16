@@ -16,19 +16,18 @@
  */
 
 #include <QFont>
+#include <QFontMetrics>
 #include <QColor>
 #include <QPainter>
 #include <QBrush>
 #include <QPen>
+#include <QGraphicsScene>
 
 #include "sudokuCell.h"
 
 
 namespace
 {
-    QFont   fontValue( "Sans", 18 );
-    QFont   fontExtraValue( "Sans", 8 );
-    QFont   fontHintValue( "Sans", 8 );
     QColor  brushInitColor( Qt::white );
     QColor  brushErrorColor( Qt::red );
     QColor  brushValueSetColor( 128, 192, 255 );
@@ -39,10 +38,12 @@ namespace
 
 
 SudokuCell::SudokuCell( qreal  x, qreal  y, qreal  width, qreal  height,
-                        int  number, QGraphicsItem *  parent ) :
+                        int  number, int  smallerFontSize,
+                        QGraphicsItem *  parent ) :
     QGraphicsRectItem( x, y, width, height, parent ),
     number( number ), maturity( 0 ), valueAssigned( 0 ), valueDeduced( 0 ),
-    isHovered( false ), isError( false ), isHintVisible( false )
+    isHovered( false ), isError( false ), isHintVisible( false ),
+    smallerFontSize( smallerFontSize )
 {
     setFlag( QGraphicsItem::ItemIsFocusable );
     setAcceptHoverEvents( true );
@@ -72,55 +73,48 @@ void  SudokuCell::paint( QPainter *  painter,
     painter->setPen( QPen( getPenColor() ) );
     painter->setBrush( QBrush( getBrushColor() ) );
     painter->drawRect( rect() );
-    QString     text;
-    QRectF      textRect( rect() );
+    QFont           font( scene()->font() );
+    painter->setFont( font );
     if ( ! isSet() )
     {
         if ( isHintVisible )
         {
-            painter->setFont( fontHintValue );
+            font.setPixelSize( smallerFontSize );
+            painter->setFont( font );
             for ( SudokuRapid::CellValues::const_iterator  k(
                         hintValues.begin() ); k != hintValues.end(); ++k )
             {
-                text = QString::number( *k );
-                QRectF  textRectAdjusted( textRect.adjusted(
-                                                    ( *k - 1 ) % 3 * 9 + 2,
-                                                    ( *k - 1 ) / 3 * 9 + 9,
-                                                    ( *k - 1 ) % 3 * 9 + 2,
-                                                    ( *k - 1 ) / 3 * 9 + 9 ) );
-                painter->drawText( textRectAdjusted.topLeft(), text );
+                drawNumber( painter, *k, *k );
             }
         }
     }
     else
     {
-        textRect = rect().adjusted( 7, -5, 7, -5 );
-        painter->setFont( fontValue );
         switch ( valueAssigned )
         {
             case 1 : case 2 : case 3 :
             case 4 : case 5 : case 6 :
             case 7 : case 8 : case 9 :
-                text = QString::number( valueAssigned );
-                painter->drawText( textRect.bottomLeft(), text );
+                drawNumber( painter, valueAssigned );
                 break;
             default:
                 break;
         }
         if ( valueDeduced == valueAssigned )
             return;
-        if ( valueAssigned )
-        {
-            textRect = rect().adjusted( 2, -17, 2, -17 );
-            painter->setFont( fontExtraValue );
-        }
+        int     pos( 0 );
         switch ( valueDeduced )
         {
             case 1 : case 2 : case 3 :
             case 4 : case 5 : case 6 :
             case 7 : case 8 : case 9 :
-                text = QString::number( valueDeduced );
-                painter->drawText( textRect.bottomLeft(), text );
+                if ( valueAssigned )
+                {
+                    font.setPixelSize( smallerFontSize );
+                    painter->setFont( font );
+                    pos = 1;
+                }
+                drawNumber( painter, valueDeduced, pos );
                 break;
             default:
                 break;
@@ -197,5 +191,24 @@ QColor  SudokuCell::getPenColor( void ) const
     if ( isHovered )
         color = color.lighter( 110 );
     return color;
+}
+
+
+void  SudokuCell::drawNumber( QPainter *  painter, int  nmb, int  pos )
+{
+    QFontMetrics    fontMetrics( painter->font() );
+    QString         text( QString::number( nmb ) );
+    QRectF          textRect( fontMetrics.boundingRect( '0' ) );
+    qreal           textWidth( textRect.width() );
+    qreal           textHeight( textRect.height() );
+    QPointF         adjust( 0, 0 );
+    pos = pos == 0 ? 5 : pos ;
+    adjust.setX( rect().x() +
+                 rect().width() / 6 * ( 1 + ( pos - 1 ) % 3 * 2 ) -
+                 textWidth / 2 - 1 );
+    adjust.setY( rect().y() +
+                 rect().height() / 6 * ( 1 + ( pos - 1 ) / 3 * 2 ) +
+                 textHeight / 2 );
+    painter->drawText( adjust, text );
 }
 

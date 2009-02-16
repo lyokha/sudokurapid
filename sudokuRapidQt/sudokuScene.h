@@ -20,6 +20,8 @@
 
 
 #include <QGraphicsScene>
+#include <QFont>
+#include <QFontMetrics>
 #include "sudokuRapidCommon.h"
 
 class SudokuCell;
@@ -30,7 +32,7 @@ class SudokuScene : public QGraphicsScene
     Q_OBJECT
 
     public:
-        SudokuScene( void );
+        explicit SudokuScene( const QString &  fontFamily = "Sans" );
 
         void  mousePressEvent( QGraphicsSceneMouseEvent *  event );
 
@@ -49,7 +51,6 @@ class SudokuScene : public QGraphicsScene
         void  cleanupCells( void );
 
     private:
-        bool                    isEnabled;
         QGraphicsLineItem *     lh[ 10 ];
         QGraphicsLineItem *     lv[ 10 ];
         SudokuCell *            cell[ 81 ];
