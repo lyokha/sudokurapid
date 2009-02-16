@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 dnl AC_PREREQ([2.63])
-AC_INIT([sudokuRapid], [1.2])
+AC_INIT([sudokuRapid], [1.3])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([sudokuRapid.h])
 AC_CONFIG_HEADERS([config.h])
