@@ -180,9 +180,12 @@ void  SudokuForm::publish( int cell, const CellList &  affectedCells )
 
 void  SudokuForm::enable( bool  enabled )
 {
-    isEnabled = enabled;
+    if ( isEnabled == enabled )
+        return;
     randomButton->setEnabled( enabled );
     solveButton->setEnabled( enabled );
+    graphicsView->setEnabled( enabled );
     scene->enable( enabled );
+    isEnabled = enabled;
 }
 

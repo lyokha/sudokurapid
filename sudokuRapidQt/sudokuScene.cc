@@ -29,7 +29,7 @@ namespace
 }
 
 
-SudokuScene::SudokuScene( void ) : isEnabled( true )
+SudokuScene::SudokuScene( const QString &  fontFamily )
 {
     for ( int  i( 0 ); i < 10; ++i )
     {
@@ -48,21 +48,20 @@ SudokuScene::SudokuScene( void ) : isEnabled( true )
     }
     for ( int  i( 0 ); i < 81; ++i )
     {
-        cell[ i ] = new SudokuCell( i % 9 * 30 + 1, i / 9 * 30 + 1, 28, 28, i );
+        cell[ i ] = new SudokuCell( i % 9 * 30 + 1, i / 9 * 30 + 1, 28, 28,
+                                    i, 10 );
         addItem( cell[ i ] );
     }
+    setFont( QFont( fontFamily, 18 ) );
 }
 
 
 void  SudokuScene::enable( bool  enabled )
 {
-    if ( enabled == isEnabled )
-        return;
     for ( int  i( 0 ); i < 81; ++i )
     {
         cell[ i ]->setEnabled( enabled );
     }
-    isEnabled = enabled;
 }
 
 
