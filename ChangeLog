@@ -1,0 +1,62 @@
+1.4:
+	libsudokuRapid:
+	- source file main.cc for sudokuRapidConsole was added in package share
+	directory.
+
+	sudokuRapidQt:
+	- freedesktop.org compliant .desktop and icon files were created which
+	means that user will see menu entry with an icon in his/her desktop menu.
+	- hints became clickable which means that user can abandon the keyboard at
+	all: just right click on a cell and left click on a value to be set (the
+	possible values will be highlighted when hovering).
+	- dynamic_cast's were changed with qgraphicsitem_cast's.
+
+1.3:
+	sudokuRapidQt:
+	- show hints and gray out board on errors.
+	- check if user clicked Cancel button in File Open dialog and do not
+	restart board in this case.
+	- move font definitions for cells to SudokuScene constructor;
+	use QFontMetrics to define font geometry in SudokuCell::drawNumber(),
+	this allows to use arbitrary fonts smoothly.
+
+1.2:
+	libsudokuRapid:
+	- added new header sudokuRapidCommon.h to store shared typedefs, enums
+	etc.
+	- added new public function getFreeValues().
+
+	sudokuRapidQt:
+	- code was significantly reorganized.
+	- file reading procedure changed to show all data read: do not stop at
+	sudokuRapid errors and just highlight them, it is possible now to show
+	errors when sudokuRapid deduces value for cell which is assigned with
+	another value from file.
+	- no error message boxes: just highlight error cells and disable board
+	interaction.
+	- user can find which values are available for cell by clicking right
+	mouse button or pressing Space or Enter keys.
+	- colors for values read from a file or entered by user differ from colors
+	deduced by sudokuRapid.
+
+1.1:
+	libsudokuRapid:
+	- readFromFile() removed from the library - this is responsibility
+	of clients to read files.
+	- fixed bug in solve() which caused exception in sudokuRapidQt when
+	Solve button were pressed on already solved board.
+	- option --enable-debug was added in configure, if enabled user will
+	see solution stack dynamics on stdout.
+
+	sudokuRapidConsole:
+	- readFromFile() added (just moved from basic class).
+
+	sudokuRapidQt:
+	- bugfix: minor grid lines now do not redraw major lines.
+	- added possibility to disable board from user interaction (when error
+	occured).
+	- more robust error messages and error cell highlighting.
+
+1.0:
+	The first public version.
+	The code was separated into library and 2 applications parts.
