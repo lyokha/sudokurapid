@@ -2,6 +2,10 @@ TEMPLATE = app
 TARGET =
 DEPENDPATH += . .
 INCLUDEPATH += . ..
+isEmpty(PREFIX) {
+    PREFIX = /usr
+}
+target.path = $${PREFIX}/bin
 INSTALLS = target
 
 # Input

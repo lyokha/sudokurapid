@@ -107,15 +107,28 @@ void  SudokuScene::cleanupCells( void )
 
 void  SudokuScene::mousePressEvent( QGraphicsSceneMouseEvent *  event )
 {
-    SudokuCell *  clicked( dynamic_cast< SudokuCell * >(
+    SudokuCell *  clicked( qgraphicsitem_cast< SudokuCell * >(
                            itemAt( event->scenePos() ) ) );
     if ( clicked )
     {
         clicked->setFocus( Qt::MouseFocusReason );
-        if ( event->button() == Qt::RightButton )
+        switch ( event->button() )
         {
-            emit wantHint( clicked->getNumber() );
-            invalidate( clicked->rect() );
+            case Qt::LeftButton :
+            {
+                int     value( clicked->getValueAssociated( event->scenePos() -
+                                                clicked->rect().topLeft() ) );
+                if ( value == 0 )
+                    break;
+                emit valueSet( clicked->getNumber(), value );
+                break;
+            }
+            case Qt::RightButton :
+                emit wantHint( clicked->getNumber() );
+                invalidate( clicked->rect() );
+                break;
+            default :
+                break;
         }
     }
 }
@@ -123,7 +136,7 @@ void  SudokuScene::mousePressEvent( QGraphicsSceneMouseEvent *  event )
 
 void  SudokuScene::keyPressEvent( QKeyEvent *  event )
 {
-    SudokuCell *    focused( dynamic_cast< SudokuCell * >( focusItem() ) );
+    SudokuCell *  focused( qgraphicsitem_cast< SudokuCell * >( focusItem() ) );
     if ( ! focused )
         return;
     int     row( focused->getNumber() / 9 );

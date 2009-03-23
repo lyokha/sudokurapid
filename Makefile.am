@@ -16,12 +16,21 @@ EXTRA_DIST = $(DIR_QT_DIST)/main.cc \
 			 $(DIR_QT_DIST)/sudokuForm.cc $(DIR_QT_DIST)/sudokuForm.h \
 			 $(DIR_QT_DIST)/sudokuScene.cc $(DIR_QT_DIST)/sudokuScene.h \
 			 $(DIR_QT_DIST)/sudokuCell.cc $(DIR_QT_DIST)/sudokuCell.h \
-			 $(DIR_QT_DIST)/sudokuRapidQt.pro $(DIR_QT_DIST)/sudokuForm.ui
+			 $(DIR_QT_DIST)/sudokuRapidQt.pro $(DIR_QT_DIST)/sudokuForm.ui \
+			 $(DIR_QT_DIST)/sudokuRapidQt.desktop $(DIR_QT_DIST)/sudokuRapidQt-48x48.png
 DIST_SUBDIRS = . sudokuRapidConsole
-dist_pkgdata_DATA = examples/board1.txt examples/board2.txt
+dist_pkgdata_DATA = examples/board1.txt examples/board2.txt sudokuRapidConsole/main.cc \
+					$(DIR_QT_DIST)/sudokuRapidQt.desktop $(DIR_QT_DIST)/sudokuRapidQt-48x48.png
 
 if BUILD_QT
 all: sudokuRapidQt/Makefile
 sudokuRapidQt/Makefile:
-	cd sudokuRapidQt; $(QMAKE) "target.path=$(bindir)" sudokuRapidQt.pro
+	cd sudokuRapidQt; $(QMAKE) "PREFIX=${prefix}" sudokuRapidQt.pro
+
+install-data-hook:
+	cd sudokuRapidQt; $(XDG_DESKTOP_MENU) install --novendor ./sudokuRapidQt.desktop
+	cd sudokuRapidQt; $(XDG_ICON_RESOURCE) install --novendor --size 48 ./sudokuRapidQt-48x48.png sudokuRapidQt
+uninstall-hook:
+	$(XDG_ICON_RESOURCE) uninstall --size 48 sudokuRapidQt
+	$(XDG_DESKTOP_MENU) uninstall sudokuRapidQt.desktop
 endif
