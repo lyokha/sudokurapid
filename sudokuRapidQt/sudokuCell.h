@@ -27,6 +27,9 @@
 class SudokuCell : public QGraphicsRectItem
 {
     public:
+        enum { Type = UserType + 1 };
+
+    public:
         SudokuCell( qreal  x, qreal  y, qreal  width, qreal  height,
                     int  number, int  smallerFontSize = -1,
                     QGraphicsItem *  parent = 0 );
@@ -39,6 +42,8 @@ class SudokuCell : public QGraphicsRectItem
 
         void  hoverLeaveEvent( QGraphicsSceneHoverEvent *  event );
 
+        void  hoverMoveEvent( QGraphicsSceneHoverEvent *  event );
+
         void  focusInEvent( QFocusEvent *  event );
 
         void  focusOutEvent( QFocusEvent *  event );
@@ -46,6 +51,8 @@ class SudokuCell : public QGraphicsRectItem
         void  showHint( SudokuRapid::CellValues &  values );
 
         void  setValue( int  value, bool  deduced = false );
+
+        int   getValueAssociated( const QPointF &  pos ) const;
 
         void  setMaturity( int  value )
         {
@@ -77,24 +84,32 @@ class SudokuCell : public QGraphicsRectItem
             isError = error;
         }
 
+        int   type( void ) const
+        {
+            return Type;
+        }
+
     private:
         QColor  getBrushColor( void ) const;
 
         QColor  getPenColor( void ) const;
 
+        int     getHintPos( const QPointF &  pos ) const;
+
         void    drawNumber( QPainter *  painter, int  nmb, int  pos = 0 );
 
     private:
-    int     number;
-    int     maturity;
-    int     valueAssigned;
-    int     valueDeduced;
-    bool    isHovered;
-    bool    isError;
-    bool    isHintVisible;
-    int     smallerFontSize;
+        int     number;
+        int     maturity;
+        int     valueAssigned;
+        int     valueDeduced;
+        int     smallerFontSize;
+        int     hintPos;
+        bool    isHovered;
+        bool    isError;
+        bool    isHintVisible;
 
-    SudokuRapid::CellValues     hintValues;
+        SudokuRapid::CellValues     hintValues;
 };
 
 

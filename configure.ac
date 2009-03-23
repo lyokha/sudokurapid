@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 dnl AC_PREREQ([2.63])
-AC_INIT([sudokuRapid], [1.3])
+AC_INIT([sudokuRapid], [1.4])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([sudokuRapid.h])
 AC_CONFIG_HEADERS([config.h])
@@ -36,9 +36,17 @@ AC_ARG_ENABLE([sudokuRapidQt],
 AM_CONDITIONAL([BUILD_QT], [test "x${disable_sudokuRapidQt}" != xyes])
 
 if test "x${disable_sudokuRapidQt}" != xyes; then
-    AC_CHECK_PROG(QMAKE, [qmake], [$QTDIR/bin/qmake], [],[$QTDIR/bin])
+    AC_CHECK_PROG(QMAKE, [qmake], [$QTDIR/bin/qmake], [], [$QTDIR/bin])
     if test -z $QMAKE; then
         AC_MSG_ERROR([qmake not found. Try to setup QTDIR variable.])
+    fi
+    AC_CHECK_PROG(XDG_DESKTOP_MENU, [xdg-desktop-menu], [xdg-desktop-menu], [])
+    if test -z $XDG_DESKTOP_MENU; then
+        AC_MSG_ERROR([xdg-desktop-menu not found. Please install xdg-utils.])
+    fi
+    AC_CHECK_PROG(XDG_ICON_RESOURCE, [xdg-icon-resource], [xdg-icon-resource], [])
+    if test -z $XDG_ICON_RESOURCE; then
+        AC_MSG_ERROR([xdg-icon-resource not found. Please install xdg-utils.])
     fi
 fi
 

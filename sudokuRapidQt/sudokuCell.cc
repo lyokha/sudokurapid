@@ -22,6 +22,7 @@
 #include <QBrush>
 #include <QPen>
 #include <QGraphicsScene>
+#include <QGraphicsSceneHoverEvent>
 
 #include "sudokuCell.h"
 
@@ -34,6 +35,7 @@ namespace
     QColor  penValueSetColor( 96, 96, 64 );
     QColor  penColorFocused( 80, 80, 56 );
     QColor  penErrorColor( Qt::black );
+    QColor  penHintHoverColor( 192, 128, 128 );
 }
 
 
@@ -42,8 +44,8 @@ SudokuCell::SudokuCell( qreal  x, qreal  y, qreal  width, qreal  height,
                         QGraphicsItem *  parent ) :
     QGraphicsRectItem( x, y, width, height, parent ),
     number( number ), maturity( 0 ), valueAssigned( 0 ), valueDeduced( 0 ),
-    isHovered( false ), isError( false ), isHintVisible( false ),
-    smallerFontSize( smallerFontSize )
+    smallerFontSize( smallerFontSize ), hintPos( 0 ),
+    isHovered( false ), isError( false ), isHintVisible( false )
 {
     setFlag( QGraphicsItem::ItemIsFocusable );
     setAcceptHoverEvents( true );
@@ -84,6 +86,9 @@ void  SudokuCell::paint( QPainter *  painter,
             for ( SudokuRapid::CellValues::const_iterator  k(
                         hintValues.begin() ); k != hintValues.end(); ++k )
             {
+                painter->setPen( QPen( getPenColor() ) );
+                if ( hintPos == *k )
+                    painter->setPen( QPen( penHintHoverColor ) );
                 drawNumber( painter, *k, *k );
             }
         }
@@ -133,6 +138,19 @@ void  SudokuCell::hoverEnterEvent( QGraphicsSceneHoverEvent *  /*event*/ )
 void  SudokuCell::hoverLeaveEvent( QGraphicsSceneHoverEvent *  /*event*/ )
 {
     isHovered = false;
+    hintPos = 0;
+    update();
+}
+
+
+void  SudokuCell::hoverMoveEvent( QGraphicsSceneHoverEvent *  event )
+{
+    if ( ! hasFocus() || ! isHintVisible )
+        return;
+    int     lastHintPos( hintPos );
+    hintPos = getHintPos( event->pos() - rect().topLeft() );
+    if ( hintPos == lastHintPos )
+        return;
     update();
 }
 
@@ -194,15 +212,31 @@ QColor  SudokuCell::getPenColor( void ) const
 }
 
 
+int  SudokuCell::getHintPos( const QPointF &  pos ) const
+{
+    int     x( pos.x() / ( rect().width() / 3 ) );
+    int     y( pos.y() / ( rect().height() / 3 ) );
+    return y * 3 + x + 1;
+}
+
+
+int  SudokuCell::getValueAssociated( const QPointF &  pos ) const
+{
+    if ( ! hasFocus() || ! isHintVisible )
+        return 0;
+    return getHintPos( pos );
+}
+
+
 void  SudokuCell::drawNumber( QPainter *  painter, int  nmb, int  pos )
 {
+    pos = pos == 0 ? 5 : pos;
     QFontMetrics    fontMetrics( painter->font() );
     QString         text( QString::number( nmb ) );
     QRectF          textRect( fontMetrics.boundingRect( '0' ) );
     qreal           textWidth( textRect.width() );
     qreal           textHeight( textRect.height() );
     QPointF         adjust( 0, 0 );
-    pos = pos == 0 ? 5 : pos ;
     adjust.setX( rect().x() +
                  rect().width() / 6 * ( 1 + ( pos - 1 ) % 3 * 2 ) -
                  textWidth / 2 - 1 );
