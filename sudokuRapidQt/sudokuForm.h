@@ -54,8 +54,6 @@ class SudokuForm : public QWidget,
 
         void  publish( int  cell, const CellList &  affectedCells );
 
-        void  makeAdditionalCleanup( void );
-
         void  enable( bool  enabled =  true );
 
     private:
