@@ -1,5 +1,5 @@
 Name:		sudokurapid
-Version:	1.4
+Version:	1.4.1
 Release:	1%{?dist}
 License:	GPL+
 Group:		Development/Libraries
@@ -18,7 +18,8 @@ to find solution or prove that there is no one very quickly.
 %setup -q
 
 
-%build ./configure --prefix=$RPM_BUILD_ROOT/usr --libdir=$RPM_BUILD_ROOT/usr/lib64
+%build
+./configure --prefix=$RPM_BUILD_ROOT/usr --libdir=$RPM_BUILD_ROOT/usr/lib64
 make %{?_smp_mflags}
 
 
@@ -80,6 +81,9 @@ xdg-desktop-menu uninstall sudokuRapidQt.desktop
 
 
 %changelog
+* Thu Jan 24 2013 Alexey Radkov <alexey.radkov@gmail.com> 1.4.1-1
+- version 1.4.1
+
 * Thu Mar 23 2009 Alexey Radkov <alexey.radkov@gmail.com> 1.4-1
 - version 1.4
 

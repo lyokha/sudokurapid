@@ -18,6 +18,9 @@
 #include <QtGui>
 #include <stdlib.h>
 #include <fcntl.h>
+#ifdef __linux__
+#   include <unistd.h>
+#endif
 
 #include "sudokuForm.h"
 
