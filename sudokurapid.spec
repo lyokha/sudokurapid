@@ -1,6 +1,6 @@
 Name:		sudokurapid
 Version:	1.4.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	GPL+
 Group:		Development/Libraries
 Summary:	Fast sudoku solution library with an heuristic algorithm
@@ -81,6 +81,9 @@ xdg-desktop-menu uninstall sudokuRapidQt.desktop
 
 
 %changelog
+* Fri Jul 4 2014 Alexey Radkov <alexey.radkov@gmail.com> 1.4.1-2
+- fixed xdg desktop file
+
 * Thu Jan 24 2013 Alexey Radkov <alexey.radkov@gmail.com> 1.4.1-1
 - version 1.4.1
 
