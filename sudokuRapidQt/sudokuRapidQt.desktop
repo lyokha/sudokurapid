@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=sudokuRapidQt
+Comment=A simple sudokuRapid based game
+Exec=sudokuRapidQt
+Icon=sudokuRapidQt
+Terminal=false
+Type=Application
+Categories=Game;BoardGame;

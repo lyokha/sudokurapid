@@ -25,7 +25,7 @@ AC_ARG_ENABLE([sudokuRapidConsole],
 AM_CONDITIONAL([BUILD_CONSOLE], [test "x${disable_sudokuRapidConsole}" != xyes])
 
 if test "x${disable_sudokuRapidConsole}" != xyes; then
-    AC_CONFIG_SUBDIRS( [sudokuRapidConsole])
+    AC_CONFIG_SUBDIRS([sudokuRapidConsole])
 fi
 
 AC_ARG_ENABLE([sudokuRapidQt],
@@ -36,9 +36,14 @@ AC_ARG_ENABLE([sudokuRapidQt],
 AM_CONDITIONAL([BUILD_QT], [test "x${disable_sudokuRapidQt}" != xyes])
 
 if test "x${disable_sudokuRapidQt}" != xyes; then
-    AC_CHECK_PROG(QMAKE, [qmake], [$QTDIR/bin/qmake], [], [$QTDIR/bin])
+    AC_CHECK_PROGS(QMAKE, [qmake-qt4 qmake], [], [])
     if test -z $QMAKE; then
-        AC_MSG_ERROR([qmake not found. Try to setup QTDIR variable.])
+        AC_MSG_ERROR([qmake not found. Please install Qt4 or higher.])
+    fi
+    if test x$QMAKE = xqmake ; then
+        if test -n "$($QMAKE --version | grep 'Qt\s*\(version\s*\)\?3')" ; then
+            AC_MSG_ERROR([qmake from Qt3 found. Please install Qt4 or higher.])
+        fi
     fi
     AC_CHECK_PROG(XDG_DESKTOP_MENU, [xdg-desktop-menu], [xdg-desktop-menu], [])
     if test -z $XDG_DESKTOP_MENU; then
