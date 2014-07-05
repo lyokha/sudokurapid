@@ -112,6 +112,8 @@ void  SudokuScene::mousePressEvent( QGraphicsSceneMouseEvent *  event )
     if ( clicked )
     {
         clicked->setFocus( Qt::MouseFocusReason );
+        if ( clicked->isSet() )
+            return;
         switch ( event->button() )
         {
             case Qt::LeftButton :

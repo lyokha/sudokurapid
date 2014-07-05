@@ -64,7 +64,7 @@ void  SudokuCell::setValue( int  value, bool  deduced )
 void  SudokuCell::showHint( SudokuRapid::CellValues &  values )
 {
     hintValues = values;
-    isHintVisible =true;
+    isHintVisible = true;
 }
 
 
@@ -230,19 +230,19 @@ int  SudokuCell::getValueAssociated( const QPointF &  pos ) const
 
 void  SudokuCell::drawNumber( QPainter *  painter, int  nmb, int  pos )
 {
-    pos = pos == 0 ? 5 : pos;
+    pos = pos == 0 ? 2 : pos;
     QFontMetrics    fontMetrics( painter->font() );
     QString         text( QString::number( nmb ) );
-    QRectF          textRect( fontMetrics.boundingRect( '0' ) );
+    QRectF          textRect( fontMetrics.boundingRect( text ) );
     qreal           textWidth( textRect.width() );
     qreal           textHeight( textRect.height() );
     QPointF         adjust( 0, 0 );
     adjust.setX( rect().x() +
-                 rect().width() / 6 * ( 1 + ( pos - 1 ) % 3 * 2 ) -
-                 textWidth / 2 - 1 );
-    adjust.setY( rect().y() +
-                 rect().height() / 6 * ( 1 + ( pos - 1 ) / 3 * 2 ) +
-                 textHeight / 2 );
+                 ( ( pos - 1 ) % 3 ) * ( rect().width() - textWidth ) / 2 +
+                   2 );
+    adjust.setY( rect().y() + textHeight +
+                 ( ( pos - 1 ) / 3 ) * ( rect().height() - textHeight ) / 2 -
+                   2 );
     painter->drawText( adjust, text );
 }
 
