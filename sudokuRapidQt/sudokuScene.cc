@@ -15,6 +15,7 @@
  * =============================================================================
  */
 
+#include <QFont>
 #include <QGraphicsLineItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>

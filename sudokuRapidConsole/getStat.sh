@@ -2,11 +2,11 @@
 #===============================================================================
 #
 #          FILE:  getStat.sh
-# 
-#         USAGE:  ./getStat.sh nmbOfRuns [dataFile] 
-# 
+#
+#         USAGE:  ./getStat.sh nmbOfRuns [dataFile]
+#
 #   DESCRIPTION:  get statistics of bad/good suduku launches
-# 
+#
 #       OPTIONS:  ---
 #  REQUIREMENTS:  ---
 #          BUGS:  ---
@@ -34,7 +34,7 @@ if [ -z "$1" ] ; then
 else
     nmbOfLaunches=$1
     if [ -n "$2" ] ; then
-    dataFile=$2
+        dataFile=$2
     fi
 fi
 
