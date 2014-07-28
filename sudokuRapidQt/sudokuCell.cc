@@ -230,19 +230,13 @@ int  SudokuCell::getValueAssociated( const QPointF &  pos ) const
 
 void  SudokuCell::drawNumber( QPainter *  painter, int  nmb, int  pos )
 {
-    pos = pos == 0 ? 2 : pos;
-    QFontMetrics    fontMetrics( painter->font() );
-    QString         text( QString::number( nmb ) );
-    QRectF          textRect( fontMetrics.boundingRect( text ) );
-    qreal           textWidth( textRect.width() );
-    qreal           textHeight( textRect.height() );
-    QPointF         adjust( 0, 0 );
-    adjust.setX( rect().x() +
-                 ( ( pos - 1 ) % 3 ) * ( rect().width() - textWidth ) / 2 +
-                   2 );
-    adjust.setY( rect().y() + textHeight +
-                 ( ( pos - 1 ) / 3 ) * ( rect().height() - textHeight ) / 2 -
-                   2 );
-    painter->drawText( adjust, text );
+    QPointF     adjust( 1, 1 );
+    if ( pos > 0 )
+    {
+        adjust.rx() += ( ( pos - 1 ) % 3 - 1 ) * rect().width() / 3;
+        adjust.ry() += ( ( pos - 1 ) / 3 - 1 ) * rect().height() / 3;
+    }
+    QRectF      drawRect( rect().translated( adjust ) );
+    painter->drawText( drawRect, Qt::AlignCenter, QString::number( nmb ) );
 }
 
