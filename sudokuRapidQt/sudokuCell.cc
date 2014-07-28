@@ -16,7 +16,6 @@
  */
 
 #include <QFont>
-#include <QFontMetrics>
 #include <QColor>
 #include <QPainter>
 #include <QBrush>

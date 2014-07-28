@@ -20,8 +20,6 @@
 
 
 #include <QGraphicsScene>
-#include <QFont>
-#include <QFontMetrics>
 #include "sudokuRapidCommon.h"
 
 class SudokuCell;
