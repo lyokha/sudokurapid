@@ -32,7 +32,9 @@ class SudokuForm : public QWidget,
     Q_OBJECT
 
     public:
-        SudokuForm( QWidget *  parent = 0 );
+        explicit SudokuForm( QWidget *  parent = 0 );
+
+        ~SudokuForm();
 
     public slots:
         void  updateBoard( int  cell, int  value );
@@ -54,7 +56,7 @@ class SudokuForm : public QWidget,
 
         void  publish( int  cell, const CellList &  affectedCells );
 
-        void  enable( bool  enabled =  true );
+        void  enable( bool  enabled = true );
 
     private:
         bool            isEnabled;
