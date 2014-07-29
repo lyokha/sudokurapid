@@ -43,6 +43,12 @@ SudokuForm::SudokuForm( QWidget *  parent ) :
 }
 
 
+SudokuForm::~SudokuForm()
+{
+    delete scene;
+}
+
+
 void  SudokuForm::updateBoard( int  cell, int  value )
 {
     if ( ! isEnabled )
