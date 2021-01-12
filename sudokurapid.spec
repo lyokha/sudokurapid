@@ -4,8 +4,8 @@ Release:        1%{?dist}
 License:        GPL+
 Group:          Development/Libraries
 Summary:        Fast sudoku solution library with an heuristic algorithm
-URL:            http://sudokurapid.sourceforge.net
-Source:         http://downloads.sourceforge.net/sudokurapid/%{name}-%{version}.tar.gz
+URL:            https://github.com/lyokha/sudokurapid
+Source:         https://github.com/lyokha/sudokurapid/archive/%{name}-%{version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  qt-devel >= 4.4, xdg-utils
 
@@ -84,7 +84,7 @@ fi
 
 
 %changelog
-* Tue Jul 29 2014 Alexey Radkov <alexey.radkov@gmail.com> 1.4.3-1
+* Tue Jan 12 2021 Alexey Radkov <alexey.radkov@gmail.com> 1.4.3-1
 - version 1.4.3
 
 * Tue Jul 29 2014 Alexey Radkov <alexey.radkov@gmail.com> 1.4.2-1
