@@ -13,6 +13,8 @@ A static library which contains the solver. Build requires *autotools*.
 sudokuRapidConsole
 ------------------
 
+A simple console application which can read, generate and solve *boards*.
+
 ```ShellSession
 $ sudokuRapidConsole /usr/share/sudokurapid/board1.txt
 Original board setup:
@@ -62,8 +64,6 @@ Solved board:
  1 8 3 7 5 9 6 4 2
 Number or retries: 2
 ```
-
-A simple console application which can read, generate and solve *boards*.
 
 sudokuRapidQt
 -------------
