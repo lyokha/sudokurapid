@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 dnl AC_PREREQ([2.63])
-AC_INIT([sudokuRapid], [1.4.2])
+AC_INIT([sudokuRapid], [1.4.3])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([sudokuRapid.h])
 AC_CONFIG_HEADERS([config.h])
@@ -35,23 +35,25 @@ AC_ARG_ENABLE([sudokuRapidQt],
 
 AM_CONDITIONAL([BUILD_QT], [test "x${disable_sudokuRapidQt}" != xyes])
 
+AC_ARG_ENABLE([sudokuRapidQt_Xdg],
+[AC_HELP_STRING([--disable-sudokuRapidQt-Xdg],
+    [do not install XDG files for sudokuRapidQt])],
+[disable_sudokuRapidQt_Xdg=yes])
+
+AM_CONDITIONAL([INSTALL_QT_XDG], [test "x${disable_sudokuRapidQt_Xdg}" != xyes])
+
 if test "x${disable_sudokuRapidQt}" != xyes; then
     AC_CHECK_PROGS(QMAKE, [qmake-qt4 qmake], [], [])
     if test -z $QMAKE; then
         AC_MSG_ERROR([qmake not found. Please install Qt4 or higher.])
     fi
-    if test x$QMAKE = xqmake ; then
-        if test -n "$($QMAKE --version | grep 'Qt\s*\(version\s*\)\?3')" ; then
+    if test x$QMAKE = xqmake; then
+        if test -n "$($QMAKE --version | grep 'Qt\s*\(version\s*\)\?3')"; then
             AC_MSG_ERROR([qmake from Qt3 found. Please install Qt4 or higher.])
         fi
     fi
-    AC_CHECK_PROG(XDG_DESKTOP_MENU, [xdg-desktop-menu], [xdg-desktop-menu], [])
-    if test -z $XDG_DESKTOP_MENU; then
-        AC_MSG_ERROR([xdg-desktop-menu not found. Please install xdg-utils.])
-    fi
-    AC_CHECK_PROG(XDG_ICON_RESOURCE, [xdg-icon-resource], [xdg-icon-resource], [])
-    if test -z $XDG_ICON_RESOURCE; then
-        AC_MSG_ERROR([xdg-icon-resource not found. Please install xdg-utils.])
+    if test "x${disable_sudokuRapidQt_Xdg}" != xyes; then
+        AC_CONFIG_SUBDIRS([sudokuRapidQt/xdg])
     fi
 fi
 

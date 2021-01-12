@@ -1,6 +1,8 @@
 #!/bin/sh
 
-for dir in . sudokuRapidConsole ; do
+qt_xdg_dir=sudokuRapidQt/xdg
+
+for dir in . sudokuRapidConsole $qt_xdg_dir ; do
     echo Doing all in ${dir} ...
     (cd $dir
     echo '  'Creating files needed by automake ...
@@ -9,8 +11,10 @@ for dir in . sudokuRapidConsole ; do
     aclocal
     echo '  'Generating configure ...
     autoconf
-    echo '  'Generating config.h.in ...
-    autoheader
+    if [ $dir != $qt_xdg_dir ] ; then
+        echo '  'Generating config.h.in ...
+        autoheader
+    fi
     echo '  'Generating Makefile.in ...
     automake -a)
 done

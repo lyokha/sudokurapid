@@ -1,5 +1,5 @@
 Name:           sudokurapid
-Version:        1.4.2
+Version:        1.4.3
 Release:        1%{?dist}
 License:        GPL+
 Group:          Development/Libraries
@@ -19,7 +19,8 @@ to find solution or prove that there is no one very quickly.
 
 
 %build
-./configure --prefix=$RPM_BUILD_ROOT/usr --libdir=$RPM_BUILD_ROOT/usr/lib64
+./configure --prefix=$RPM_BUILD_ROOT/usr --libdir=$RPM_BUILD_ROOT/usr/lib64 \
+                     --disable-sudokuRapidQt-Xdg
 make %{?_smp_mflags}
 
 
@@ -83,6 +84,9 @@ fi
 
 
 %changelog
+* Tue Jul 29 2014 Alexey Radkov <alexey.radkov@gmail.com> 1.4.3-1
+- version 1.4.3
+
 * Tue Jul 29 2014 Alexey Radkov <alexey.radkov@gmail.com> 1.4.2-1
 - version 1.4.2
 

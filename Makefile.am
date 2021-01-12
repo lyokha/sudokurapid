@@ -4,12 +4,15 @@ endif
 
 if BUILD_QT
 DIR_QT_APP = sudokuRapidQt
+if INSTALL_QT_XDG
+DIR_QT_APP_XDG = sudokuRapidQt/xdg
+endif
 endif
 
 lib_LIBRARIES = libsudokuRapid.a
 include_HEADERS = sudokuRapid.h sudokuRapidCommon.h
 libsudokuRapid_a_SOURCES = sudokuRapid.cc sudokuRapid.h sudokuRapidCommon.h
-SUBDIRS = . $(DIR_CONSOLE_APP) $(DIR_QT_APP)
+SUBDIRS = . $(DIR_CONSOLE_APP) $(DIR_QT_APP) $(DIR_QT_APP_XDG)
 
 DIR_QT_DIST = sudokuRapidQt
 EXTRA_DIST = $(DIR_QT_DIST)/main.cc \
@@ -26,11 +29,4 @@ if BUILD_QT
 all: sudokuRapidQt/Makefile
 sudokuRapidQt/Makefile:
 	cd sudokuRapidQt; $(QMAKE) "PREFIX=${prefix}" sudokuRapidQt.pro
-
-install-data-hook:
-	cd sudokuRapidQt; $(XDG_DESKTOP_MENU) install --novendor ./sudokuRapidQt.desktop
-	cd sudokuRapidQt; $(XDG_ICON_RESOURCE) install --novendor --size 48 ./sudokuRapidQt-48x48.png sudokuRapidQt
-uninstall-hook:
-	$(XDG_ICON_RESOURCE) uninstall --size 48 sudokuRapidQt
-	$(XDG_DESKTOP_MENU) uninstall sudokuRapidQt.desktop
 endif
