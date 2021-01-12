@@ -5,7 +5,7 @@ License:        GPL+
 Group:          Development/Libraries
 Summary:        Fast sudoku solution library with an heuristic algorithm
 URL:            https://github.com/lyokha/sudokurapid
-Source:         https://github.com/lyokha/sudokurapid/archive/%{name}-%{version}.tar.gz
+Source:         https://github.com/lyokha/sudokurapid/releases/download/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  qt-devel >= 4.4, xdg-utils
 
