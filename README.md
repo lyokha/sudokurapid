@@ -93,3 +93,10 @@ $ sudo make install
 | `--disable-sudokuRapidQt-Xdg`  | do not install XDG files for sudokuRapidQt |
 | `--enable-debug`               | enable printing solution stack to stdout   |
 
+#### RPM packages
+
+RPM packages can be built using spec file *sudokurapid.spec*. The build creates
+two packages: *sudokurapid-devel* which contains *libsudokuRapid* and
+*sudokuRapidConsole*, and *sudokurapid-qt* which contains *sudokuRapidQt*. The
+two packages can be installed independently.
+
