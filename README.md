@@ -87,7 +87,7 @@ $ sudo make install
 
 | Option                         | Meaning                                    |
 | ------------------------------ | ------------------------------------------ |
-| `--help`                       | see all available options                  |
+| `--help`                       | show all available options                 |
 | `--disable-sudokuRapidConsole` | do not build sudokuRapidConsole            |
 | `--disable-sudokuRapidQt`      | do not build sudokuRapidQt                 |
 | `--disable-sudokuRapidQt-Xdg`  | do not install XDG files for sudokuRapidQt |
